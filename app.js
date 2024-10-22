@@ -9,7 +9,7 @@ app.set('view engine', 'ejs');
 app.get('/', (req, res) => {
 
     const user = {
-        name: 'Charvi',
+        name: 'Bhanu Rana',
         time: new Date().toLocaleTimeString(),
         welcomeMessage: 'Welcome to our  website!',
     };
