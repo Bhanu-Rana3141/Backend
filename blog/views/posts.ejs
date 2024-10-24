@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Blog</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+      height: 100%;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header, footer {
+      text-align: center;
+      background-color: #aed2f8;
+      color: white;
+      padding: 10px 0;
+    }
+
+    footer {
+      margin-top: auto;
+    }
+
+    h1, h2 {
+      color: #333;
+    }
+
+    .form-container, .posts-container {
+      padding: 20px;
+      background-color: white;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    textarea {
+      height: 120px;
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: #343b62;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      margin:1vh 100vh;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .btn:hover {
+      background-color: #218838;
+    }
+
+    .posts-container ul {
+      list-style: none;
+    }
+
+    .posts-container ul li {
+      padding: 10px;
+      margin: 10px 0;
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    .posts-container ul li a {
+      text-decoration: none;
+      color: #007bff;
+      font-size: 18px;
+    }
+
+    .posts-container ul li a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Welcome to Blog</h1>
+    </header>
+
+    <div class="form-container">
+      <h2>Add a New Post</h2>
+      <form action="/posts" method="POST">
+        <input type="text" name="title" placeholder="Title" required>
+        <textarea name="body" placeholder="Write your thoughts here..." required></textarea>
+        <button type="submit" class="btn">Add Post</button>
+      </form>
+    </div>
+
+    <div class="posts-container">
+      <h2>All Posts</h2>
+      <ul>
+        <% posts.forEach(post => { %>
+          <li>
+            <a href="/posts/<%= post.slug %>" class="post-link"><%= post.title %></a>
+          </li>
+        <% }) %>
+      </ul>
+    </div>
+
+    <footer>
+      <p>&copy; 2024 My Blog. All rights reserved.</p>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 200px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+        li {
+            padding: 10px;
+            background-color: #fff;
+            margin: 10px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Search Items</h1>
+    <form action="/search" method="get">
+        <input type="text" name="q" placeholder="Search..." value="<%= query %>">
+        <button type="submit">Search</button>
+    </form>
+
+    <h2>Search Results for "<%= query %>":</h2>
+    <ul>
+        <% if (results.length > 0) { %>
+            <% results.forEach(item => { %>
+                <li><%= item.name %> (<%= item.type %>)</li>
+            <% }) %>
+        <% } else { %>
+            <li>No results found.</li>
+        <% } %>
+    </ul>
+
+</body>
+</html>
