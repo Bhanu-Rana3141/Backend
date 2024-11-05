@@ -1,0 +1,38 @@
+1. Insert a new document into the students collection
+db.students.insertOne({
+    name: "John Doe",
+    age: 20,
+    grade: "B"
+});
+
+2. Retrieve all documents from the students collection
+db.students.find();
+
+3. Find all students with age greater than 18
+db.students.find({ age: { $gt: 18 } });
+
+4. Find all students with age greater than 18 and less than 23
+db.students.find({ age: { $gt: 18, $lt: 23 } });
+
+5. Update the grade of a student with name "John" to "A"
+db.students.updateOne(
+    { name: "John" },
+    { $set: { grade: "A" } }
+);
+
+6. Delete a document where name is "Emily"
+db.students.deleteOne({ name: "Emily" });
+
+ADVANCED
+
+1. Count the number of students who have a grade of "B"
+db.students.countDocuments({ grade: "B" });
+
+2. Retrieve only the name and grade fields of all documents in the students collection
+db.students.find(
+    {},
+    { name: 1, grade: 1, _id: 0 }
+);
+
+3. Find all students and sort them by age in descending order
+db.students.find().sort({ age: -1 });
