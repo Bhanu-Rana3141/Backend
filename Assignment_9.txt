@@ -1,0 +1,97 @@
+Assignment9
+
+db.orders.insertMany([    { orderId: 1, userId: 101, orderTotal: 120, orderStatus: "shipped", year: 2023, membershipTier: "VIP" },    { orderId: 2, userId: 102, orderTotal: 50, orderStatus: "pending", year: 2023, membershipTier: "Regular" },    { orderId: 3, userId: 103, orderTotal: 300, orderStatus: "shipped", year: 2022, membershipTier: "VIP" },    { orderId: 4, userId: 104, orderTotal: 200, orderStatus: "shipped", year: 2023, membershipTier: "VIP" },    { orderId: 5, userId: 105,
+ orderTotal: 75, orderStatus: "shipped", year: 2023, membershipTier: "Regular" }]);
+
+ db.orders.aggregate([{$match: {orderTotal: { $gt: 100 },orderStatus: "shipped"}}]);
+
+db.createCollection("users")
+{ ok: 1 }
+assignment9> db.users.insertMany([    { userId: 101, name: "Alice", email: "alice@example.com" },    { userId: 102, name: "Bob", email: "bob@example.com" },    { userId: 103, name: "Charlie", email: "charlie@example.com" },    { userId: 104, name: "Daisy", email: "daisy@example.com" },    { userId: 105, name: "Eve", email: "eve@example.com" }]);
+
+db.users.aggregate([    {        $lookup: {            from: "orders",                       localField: "userId",                 foreignField: "userId",                  as: "userOrders"                       }    }]);
+
+db.orders.aggregate([
+    {
+        $match: { year: 2023 }
+    },
+    {
+        $group: {
+            _id: null,
+            totalRevenue: { $sum: "$orderTotal" }
+        }
+    }
+]);
+db.employees.aggregate([
+    {
+        $lookup: {
+            from: "departments",
+            localField: "departmentId",
+            foreignField: "departmentId",
+            as: "departmentDetails"
+        }
+    },
+    {
+        $match: { "departmentDetails.name": "Sales" }
+    }
+]);
+
+db.products.aggregate([
+    {
+        $group: {
+            _id: { category: "$category", brand: "$brand" },
+            totalSales: { $sum: "$sales" }
+        }
+    }
+]);
+
+
+db.books.aggregate([
+    {
+        $lookup: {
+            from: "borrowRecords",
+            localField: "bookId",
+            foreignField: "bookId",
+            as: "borrowDetails"
+        }
+    },
+    {
+        $project: {
+            title: 1,
+            borrowCount: { $size: "$borrowDetails" }
+        }
+    }
+]);
+
+db.orders.aggregate([
+    {
+        $lookup: {
+            from: "customers",
+            localField: "customerId",
+            foreignField: "customerId",
+            as: "customerDetails"
+        }
+    },
+    {
+        $unwind: "$customerDetails"
+    },
+    {
+        $match: { "customerDetails.membershipTier": "VIP" }
+    },
+    {
+        $group: {
+            _id: null,
+            totalRevenue: { $sum: "$orderTotal" }
+        }
+    }
+]);
+
+
+db.reviews.aggregate([
+    {
+        $group: {
+            _id: "$productId",
+            averageRating: { $avg: "$rating" }
+        }
+    }
+]);
